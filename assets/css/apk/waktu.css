@@ -1,0 +1,196 @@
+/* .container-clock {
+    position: absolute;
+    border-radius: 20px;
+    padding-top: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-top-left-radius: 225px;
+    border-top-right-radius: 225px;
+    box-shadow: 4px 4px 8px rgba(0,0,0,0.4),
+                -4px -4px 8px rgba(255,255,255,0.2),
+                inset -4px -4px 4px rgba(0,0,0,0.4),
+                inset 4px 4px 4px rgba(255,255,255,0.2);
+    background: linear-gradient(145deg, var(--secondary), var(--dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 1rem auto;
+} */
+
+.clock {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(145deg, var(--dark), var(--secondary));
+    border-radius: 50%;
+    box-shadow: -2px -2px 4px rgba(0,0,0,0.3),
+                2px 2px 4px rgba(255,255,255,0.1),
+                inset 4px 4px 16px rgba(0,0,0,0.6),
+                inset -4px -4px 16px rgba(255,255,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clock::before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #2f363e;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    z-index: 111;
+}
+
+.clock span {
+    position: absolute;
+    inset: 1px;
+    color: #fff;
+    text-align: center;
+    transform: rotate(calc(30deg * var(--i)));
+}
+
+.clock span b {
+    opacity: 0.5;
+    font-size: 1.7em;
+    font-weight: 600;
+    display: inline-block;
+    transform: rotate(calc(-30deg * var(--i)));
+}
+
+.circle {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border: 0px dotted rgba(255,255,255,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    z-index: 10;
+}
+
+.circle i {
+    position: absolute;
+    width: 6px;
+    height: 50%;
+    background: var(--clr);
+    opacity: 0.5;
+    transform-origin: bottom;
+    transform: scaleY(0.5);
+    
+}
+
+.circle1 i::before {
+    content: '';
+    border-style: solid;
+    border-width: 5px 15px 5px 0;
+    border-color: transparent var(--clr) transparent transparent;
+    position: absolute;
+    transform: rotate(90deg);
+    left: -6.6px;
+    top: -10px;
+}
+
+.circle2 i::before {
+    content: '';
+    border-style: solid;
+    border-width: 5px 15px 5px 0;
+    border-color: transparent var(--clr) transparent transparent;
+    position: absolute;
+    transform: rotate(90deg);
+    left: -6.6px;
+    top: -10px;
+}
+
+.circle3 i::before {
+    content: '';
+    border-style: solid;
+    border-width: 5px 15px 5px 0;
+    border-color: transparent var(--clr) transparent transparent;
+    position: absolute;
+    transform: rotate(90deg);
+    left: -6.6px;
+    top: -10px;
+}
+
+.circle:nth-child(1) i {
+    width: 2px;
+}
+
+.circle:nth-child(2) i {
+    width: 2px;
+}
+
+.circle:nth-child(3) i {
+    width: 2px;
+}
+
+.circle2 {
+    width: 240px;
+    height: 240px;
+    z-index: 9;
+}
+
+.circle3 {
+    width: 180px;
+    height: 180px;
+    z-index: 8;
+}
+
+.circle::before {
+    content: '';
+    position: absolute;
+    top: -8.5px;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    background: var(--clr);
+    box-shadow: 0 0 20px var(--clr), 0 0 60px var(--clr);
+}
+
+#time div {
+    position: relative;
+    font-weight: 500;
+    color: var(--clr);
+}
+
+#time div:nth-child(1)::after,
+#time div:nth-child(2)::after {
+    content: ' : ';
+    position: absolute;
+    left: 6rem;
+}
+
+#time div:last-child {
+    font-size: 0.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+#time div:nth-child(2)::after {
+    animation: tick-tick 1s steps(1) infinite;
+}
+
+@keyframes tick-tick {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+#hr,#mn,#sc {
+    display: none;
+}
+
+
+#dd,#mm,#yy {
+    color: var(--clr);
+}

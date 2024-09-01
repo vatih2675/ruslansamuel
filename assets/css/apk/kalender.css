@@ -1,0 +1,90 @@
+.wrapper .calendar li {
+    /* color: var(--light); */
+    width: calc(100%/7);
+    font-size: 1rem;
+}
+
+.wrapper .calendar .weeks li:first-child {
+    color: red;
+}
+
+.wrapper .calendar .weeks li:nth-child(6) {
+    color: green;
+}
+
+.wrapper .calendar .days li:first-child {
+    color: red;
+}
+
+.wrapper .calendar .days li:nth-child(6) {
+    color: green;
+}
+
+.wrapper .calendar .days li:nth-child(8) {
+    color: red;
+}
+
+.wrapper .calendar .days li:nth-child(13) {
+    color: green;
+}
+
+.wrapper .calendar .days li:nth-child(15) {
+    color: red;
+}
+
+.wrapper .calendar .days li:nth-child(20) {
+    color: green;
+}
+
+.wrapper .calendar .days li:nth-child(22) {
+    color: red;
+}
+
+.wrapper .calendar .days li:nth-child(27) {
+    color: green;
+}
+
+.wrapper .calendar .days li:nth-child(29) {
+    color: red;
+}
+
+.wrapper .calendar .days li:nth-child(34) {
+    color: green;
+}
+
+.wrapper .calendar .days li {
+    z-index: 1;
+    cursor: pointer;
+    position: relative;
+    margin-top: 15px;
+}
+
+/* .wrapper .calendar .days li.inactive {
+    color: rgb(100, 100, 100);
+    transform: scale(0.6);
+}
+
+.wrapper .calendar .days li.active {
+    transform: scale(1.2);
+    font-weight: bold;
+}
+
+.wrapper .calendar .days li::before {
+    position: absolute;
+    content: "";
+    left: 50%;
+    top: 50%;
+    height: 40px;
+    width: 40px;
+    z-index: 1;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.wrapper .calendar .days li.active::before {
+    border: 2px solid rgb(100, 100, 100);
+}
+
+.wrapper .calendar .days li:not(.active):hover::before {
+    border: 1px solid rgb(150, 150, 150);
+} */
