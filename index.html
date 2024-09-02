@@ -1,0 +1,788 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Ruslan Samuel</title>
+
+	<!-- Meta Tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Webestica.com">
+	<meta name="description" content="Bootstrap 5 based Social Media Network and Community Theme">
+
+	<!-- Dark mode -->
+	<script>
+		const storedTheme = localStorage.getItem('theme')
+		const getPreferredTheme = () => {
+			if (storedTheme) {
+				return storedTheme
+			}
+			return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'light'
+		}
+
+		const setTheme = function (theme) {
+			if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+				document.documentElement.setAttribute('data-bs-theme', 'dark')
+			} else {
+				document.documentElement.setAttribute('data-bs-theme', theme)
+			}
+		}
+
+		setTheme(getPreferredTheme())
+
+		window.addEventListener('DOMContentLoaded', () => {
+		    var el = document.querySelector('.theme-icon-active');
+			if(el != 'undefined' && el != null) {
+				const showActiveTheme = theme => {
+				const activeThemeIcon = document.querySelector('.theme-icon-active use')
+				const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+				const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
+				document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+					element.classList.remove('active')
+				})
+				btnToActive.classList.add('active')
+				activeThemeIcon.setAttribute('href', svgOfActiveBtn)
+			}
+
+			window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+				if (storedTheme !== 'light' || storedTheme !== 'dark') {
+					setTheme(getPreferredTheme())
+				}
+			})
+
+			showActiveTheme(getPreferredTheme())
+
+			document.querySelectorAll('[data-bs-theme-value]')
+				.forEach(toggle => {
+					toggle.addEventListener('click', () => {
+						const theme = toggle.getAttribute('data-bs-theme-value')
+						localStorage.setItem('theme', theme)
+						setTheme(theme)
+						showActiveTheme(theme)
+					})
+				})
+			}
+		})
+  </script>
+
+	<!-- Favicon -->
+	<link rel="shortcut icon" href="assets/images/avatar/ruslan.jpg">
+
+	<!-- Google Font -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
+
+  <!-- CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+	<!-- Plugins CSS -->
+	<link rel="stylesheet" type="text/css" href="assets/vendor/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/bootstrap-icons/bootstrap-icons.css">
+	<link rel="stylesheet" type="text/css" href="assets/vendor/glightbox-master/dist/css/glightbox.min.css">
+
+	<!-- Theme CSS -->
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/musik.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/apk/kalender.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/apk/waktu.css">
+	<link rel="stylesheet" type="text/css" href="assets/css/apk/kanvas.css">
+	 
+</head>
+
+<body>
+
+<!-- =======================
+Header START -->
+<header class="navbar-light fixed-top header-static bg-mode shadow">
+
+	<!-- Logo Nav START -->
+	<nav class="container mx-auto sm:px-20 d-flex justify-content-between align-items-center py-2">
+			<!-- Logo START -->
+    <a class="text-2xl fw-bold text-primary" href="#">RUSLAN SAMUEL <i class="bi bi-patch-check-fill text-primary"></i></a>
+    <!-- Logo END -->
+
+    <!-- Nav right START -->
+    <div class="d-flex justify-content-center align-items-center gap-3">
+      <div class="d-flex flex-column align-items-end">
+        <small><i class="bi bi-calendar3 me-2"></i><span class="tanggalHariIni"></span></small>
+        <small><i class="bi bi-clock me-2"></i><span class="jamBerjalan"></span></small>
+      </div>
+      <ul class="nav flex-nowrap align-items-center list-unstyled">
+        <li class="nav-item dropdown">
+          <a class="nav-link bg-light icon-md btn btn-light p-0 rounded-circle" href="#" id="notifDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+            <i class="bi bi-bell-fill fs-6"> </i>
+          </a>
+          <div class="dropdown-menu dropdown-animation dropdown-menu-end dropdown-menu-size-md p-0 border-0" aria-labelledby="notifDropdown">
+            <div class="card">
+              <div class="card-header d-flex justify-content-between align-items-center p-2">
+                <h6 class="m-0 d-flex fw-bold justify-content-between align-items-center">Pemberitahuan</h6>
+                <a class="small text-gray-400 hover:text-sky-600" href="#">Lihat Semua</a>
+              </div>
+              <div class="card-body p-0">
+                <ul class="list-group list-group-flush list-unstyled p-2" id="cardPengumuman"></ul>
+              </div>
+            </div>
+          </div>
+        </li>
+        <!-- Notification dropdown END -->
+
+        <li class="nav-item ms-2 dropdown">
+          <a class="nav-link btn icon-md p-0 rounded-circle overflow-hidden" href="#" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
+            <img class="avatar-img fotoProfil" src="" alt="">
+          </a>
+          <ul class="dropdown-menu dropdown-animation dropdown-menu-end pt-3 small me-md-n3" aria-labelledby="profileDropdown">
+            <!-- Profile info -->
+            <li class="px-3">
+              <div class="d-flex align-items-center position-relative">
+                <!-- Avatar -->
+                <div class="avatar me-3">
+                  <img class="avatar-img rounded-circle fotoProfil" src="" alt="avatar">
+                </div>
+                <div>
+                  <a class="h6 stretched-link text-blue-500 namaLengkap" href="#"></a>
+                  <p class="small m-0">Web Developer</p>
+                </div>
+              </div>
+            </li>
+            <li class="dropdown-divider"></li>
+            <!-- Links -->
+            <!-- <li><a class="dropdown-item" href="settings.html"><i class="bi bi-gear fa-fw me-2"></i>Pengaturan & Privasi</a></li>
+            <li> 
+              <a class="dropdown-item" href="https://support.webestica.com/" target="_blank">
+                <i class="fa-fw bi bi-life-preserver me-2"></i>Dukungan
+              </a> 
+            </li>
+            <li> 
+              <a class="dropdown-item" href="docs/index.html" target="_blank">
+                <i class="fa-fw bi bi-card-text me-2"></i>Dokumentasi
+              </a> 
+            </li>
+            <li class="dropdown-divider"></li>
+            <li><a class="dropdown-item bg-danger-soft-hover" href="sign-in-advance.html"><i class="bi bi-power fa-fw me-2"></i>Keluar</a></li>
+            <li> <hr class="dropdown-divider"></li> -->
+            <!-- Dark mode options START -->
+            <li>
+              <div class="modeswitch-item theme-icon-active d-flex justify-content-center gap-3 align-items-center p-2 pb-0">
+                <span>Mode :</span>
+                <button type="button" class="btn btn-modeswitch nav-link text-primary-hover mb-0" data-bs-theme-value="light" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cerah">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sun fa-fw mode-switch" viewBox="0 0 16 16">
+                    <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+                    <use href="#"></use>
+                  </svg>
+                </button>
+                <button type="button" class="btn btn-modeswitch nav-link text-primary-hover mb-0" data-bs-theme-value="dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Gelap">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-moon-stars fa-fw mode-switch" viewBox="0 0 16 16">
+                    <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278zM4.858 1.311A7.269 7.269 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.316 7.316 0 0 0 5.205-2.162c-.337.042-.68.063-1.029.063-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286z"/>
+                    <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+                    <use href="#"></use>
+                  </svg>
+                </button>
+                <button type="button" class="btn btn-modeswitch nav-link text-primary-hover mb-0 active" data-bs-theme-value="auto" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Otomatis">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-half fa-fw mode-switch" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+                    <use href="#"></use>
+                  </svg>
+                </button>
+              </div>
+            </li> 
+            <!-- Dark mode options END-->
+          </ul>
+        </li>
+        <!-- Profile START -->
+        
+      </ul>
+      <!-- Nav right END -->
+    </div>
+	</nav>
+	<!-- Logo Nav END -->
+</header>
+<!-- =======================
+Header END -->
+
+<!-- **************** MAIN CONTENT START **************** -->
+<main>
+  <!-- Container START -->
+  <div class="container  mx-auto sm:px-20">
+    <div class="row g-4">
+      <!-- Main content START -->
+      <div class="col-lg-8 vstack gap-4">
+        <!-- Card START -->
+        <div class="card shadow-sm">
+          <div class="h-200px rounded-top shadow-sm" style="background-image:url(assets/images/bg/04.jpg); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+            <!-- Card body START -->
+            <div class="card-body py-0">
+              <div class="d-sm-flex align-items-start text-center text-sm-start">
+                <div>
+                  <!-- Avatar -->
+                  <div class="avatar avatar-xxl mt-n5 mb-3">
+                    <img class="avatar-img rounded-circle border border-white border-3 shadow-sm fotoProfil" src="" alt="Foto Profil">
+                  </div>
+                </div>
+                <div class="ms-sm-4 mt-sm-3" style="cursor: default;">
+                  <!-- Info -->
+                  <h5 class="mb-0 h5 text-blue-600"><span class="namaLengkap"></span><i class="bi bi-patch-check-fill text-primary small ms-1"></i></h5>
+                  <small class="small namaAlias"></small>
+                </div>
+                <!-- Button -->
+                <div class="d-flex mt-3 justify-content-center ms-sm-auto">
+                  <a class="btn rounded-pill btn-danger-soft me-2" target="_blank" href="assets/documents/CV Ulan.pdf"><i class="bi bi-download pe-1"></i> Download CV</a>
+                  <div class="dropdown">
+                    <!-- Card share action menu -->
+                    <button class="icon-md rounded-circle btn btn-light" type="button" id="profileAction2" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="bi bi-three-dots"></i>
+                    </button>
+                    <!-- Card share action dropdown menu -->
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileAction2">
+                      <li><a class="dropdown-item" href="https://wa.me/62895708460123" target="_blank"> <i class="bi bi-whatsapp fa-fw pe-2"></i>WhatsApp</a></li>
+                      <li><a class="dropdown-item" href="https://facebook.com/rushjr13" target="_blank"> <i class="bi bi-facebook fa-fw pe-2"></i>Facebook</a></li>
+                      <li><a class="dropdown-item" href="https://instagram.com/rusland_s" target="_blank"> <i class="bi bi-instagram fa-fw pe-2"></i>Instagram</a></li>
+                      <li><a class="dropdown-item" href="https://youtube.com/@rushjrentertainment" target="_blank"> <i class="bi bi-youtube fa-fw pe-2"></i>Youtube</a></li>
+                      <li><a class="dropdown-item" href="https://tiktok.com/@dm2675jz" target="_blank"> <i class="bi bi-tiktok fa-fw pe-2"></i>Tiktok</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- List profile -->
+              <ul class="list-inline mb-0 d-flex justify-content-evenly align-items-center mt-3 mt-sm-0" style="cursor: default;">
+                <li class="list-inline-item"><i class="bi bi-code-slash me-1"></i>Web Developer</li>
+                <li class="list-inline-item"><i class="bi bi-geo-alt me-1"></i>Gorontalo, Indonesia</li>
+                <li class="list-inline-item"><i class="bi bi-cake2 me-1"></i><span class="umur"></span></li>
+              </ul>
+            </div>
+            <!-- Card body END -->
+            <div class="card-footer mt-3 pt-2 pb-0">
+              <!-- Nav profile pages -->
+              <ul class="nav nav-tabs nav-bottom-line align-items-center justify-content-center justify-content-center mb-0 border-0">
+                <li class="nav-item text-center"><a class="nav-link active" data-bs-toggle="tab" href="#tab-profil">Profil</a></li>
+                <li class="nav-item text-center"><a class="nav-link" data-bs-toggle="tab" href="#tab-pendidikan">Pendidikan</a></li>
+                <li class="nav-item text-center"><a class="nav-link" data-bs-toggle="tab" href="#tab-pengalaman">Pengalaman Kerja</a></li>
+              </ul>
+            </div>
+          </div>
+          <!-- Card END -->
+
+          <!-- Tab Panel -->
+          <div class="tab-content m-0 p-0">
+            <!-- Tab Profil -->
+            <div class="tab-pane fade show active" id="tab-profil">
+              <div class="card shadow-sm mb-3">
+                <div class="card-header border-0 pb-0">
+                  <h5 class="card-title m-0 text-2xl fw-bold"><i class="bi-person-fill-check me-2"></i>Profil</h5> 
+                </div>
+                <div class="card-body">
+                  <div class="row g-3">
+                    <div class="col-sm-6">
+                      <div class="d-flex align-items-center rounded border px-3 py-2" style="cursor: default;"> 
+                        <p class="mb-0">
+                          <i class="bi bi-calendar3 fa-fw me-2"></i><span class="tempatLahir"></span>, <span class="tanggalLahir"></span>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="d-flex align-items-center rounded border px-3 py-2" style="cursor: default;"> 
+                        <p class="mb-0">
+                          <i class="bi bi-gender-male fa-fw me-2"></i><span class="jenisKelamin"></span>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="d-flex align-items-center rounded border px-3 py-2" style="cursor: default;"> 
+                        <p class="mb-0">
+                          <i class="bi bi-heart fa-fw me-2"></i><span class="statusNikah"></span>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="d-flex align-items-center rounded border px-3 py-2" style="cursor: default;"> 
+                        <p class="mb-0">
+                          <i class="bi bi-moon-stars fa-fw me-2"></i><span class="agama"></span>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="d-flex align-items-center rounded border px-3 py-2" style="cursor: default;"> 
+                        <p class="mb-0">
+                          <i class="bi bi-geo-alt fa-fw me-2"></i><span class="alamat"></span>
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div class="col-sm-6">
+                      <div class="d-flex align-items-center rounded border px-3 py-2" style="cursor: default;"> 
+                        <a class="mb-0 text-gray-600 hover:text-blue-500" target="_blank" href="https://wa.me/6295708460123">
+                          <i class="bi bi-whatsapp fa-fw me-2"></i><span class="nomorTelepon"></span>
+                        </a>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="d-flex align-items-center rounded border px-3 py-2" style="cursor: default;"> 
+                        <p class="mb-0">
+                          <i class="bi bi-envelope-at fa-fw me-2"></i><span class="alamatEmail"></span>
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="d-flex align-items-center rounded border px-3 py-2" style="cursor: default;"> 
+                        <a class="mb-0 text-gray-600 hover:text-blue-500" target="_blank" href="https://vatih2675.github.io/ruslansamuel">
+                          <i class="bi bi-browser-chrome fa-fw me-2"></i><span class="website"></span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+              <!-- Card Hobi -->
+              <div class="card shadow-sm mb-3">
+                <div class="card-header d-sm-flex justify-content-between border-0 pb-0">
+                  <h5 class="card-title m-0 text-2xl fw-bold"><i class="bi-bullseye me-2"></i>Hobi</h5>
+                </div>
+                <div class="card-body d-flex align-items-center justify-content-evenly gap-3" id="cardHobi"></div>
+              </div>
+
+              <!-- Card Skill -->
+              <div class="card shadow-sm mb-3">
+                <div class="card-header d-sm-flex justify-content-between border-0 pb-0">
+                  <h5 class="card-title m-0 text-2xl fw-bold"><i class="bi-bookmark-check me-2"></i>Skill / Keahlian</h5>
+                </div>
+                <div class="card-body d-flex align-items-center justify-content-evenly gap-3 flex-wrap" id="cardSkill"></div>
+              </div>
+
+              <!-- Card Maps -->
+              <div class="card shadow-sm mb-3">
+                <div class="card-header d-sm-flex justify-content-between border-0 pb-0">
+                  <h5 class="card-title m-0 text-2xl fw-bold"><i class="bi-geo-alt me-2"></i>Lokasi</h5>
+                </div>
+                <div class="card-body" id="cardMaps">
+                  <iframe src="" class="maps" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                  <p class="m-0 mt-2 text-center alamatLengkap cursor-default"></p>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Tab Pendidikan -->
+            <div class="tab-pane fade" id="tab-pendidikan">
+              <!-- Formal -->
+              <div class="card shadow-sm mb-3">
+                <div class="card-header border-0 pb-0">
+                  <h5 class="card-title m-0 text-2xl fw-bold"><i class="bi-book me-2"></i>Pendidikan Formal</h5> 
+                </div>
+                <div class="card-body" id="cardPendidikanFormal"></div>
+              </div>
+
+              <!-- Non Formal -->
+              <div class="card shadow-sm mb-3">
+                <div class="card-header border-0 pb-0">
+                  <h5 class="card-title m-0 text-2xl fw-bold"><i class="bi-award me-2"></i>Pendidikan Non Formal</h5> 
+                </div>
+                <div class="card-body" id="cardPendidikanNonFormal"></div>
+              </div>
+            </div>
+            
+            <!-- Tab Pengalaman Kerja -->
+            <div class="tab-pane fade" id="tab-pengalaman">
+              <div class="card shadow-sm mb-3">
+                <div class="card-header border-0 pb-0">
+                  <h5 class="card-title m-0 text-2xl fw-bold"><i class="bi-person-workspace me-2"></i>Pengalaman Kerja</h5> 
+                </div>
+                <div class="card-body" id="cardPengalaman"></div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <!-- Main content END -->
+
+        <!-- Right sidebar START -->
+        <div class="col-lg-4">
+
+          <div class="row g-4">
+
+            <!-- Card START -->
+            <div class="col-sm-6 col-lg-12">
+              <div class="card">
+                <div class="card-header border-0 pb-0">
+                  <h5 class="card-title mb-3 text-2xl fw-bold"><i class="bi-person-badge me-2"></i>Tentang Saya</h5>
+                  <!-- Button modal -->
+                </div>
+                <!-- Card body START -->
+                <div class="card-body position-relative pt-0">
+                  <p class="m-0 text-justify tentangSaya"></p>
+                </div>
+                <!-- Card body END -->
+              </div>
+            </div>
+            <!-- Card END -->
+
+            <!-- Card START -->
+            <div class="col-sm-6 col-lg-12">
+              <div class="card">
+                <!-- Card header START -->
+                <div class="card-header d-sm-flex justify-content-between border-0">
+                  <h5 class="card-title m-0 text-2xl fw-bold"><i class="bi-images me-2"></i>Galeri</h5>
+                </div>
+                <!-- Card header END -->
+                <!-- Card body START -->
+                <div class="card-body position-relative pt-0">
+                  <div class="row g-2" id="cardGaleri"></div>
+                </div>
+                <!-- Card body END -->
+              </div>
+            </div>
+            <!-- Card END -->
+
+            <!-- Card START -->
+            <div class="col-sm-6 col-lg-12">
+              <div class="card">
+                <!-- Card header START -->
+                <div class="card-header d-sm-flex justify-content-between align-items-center border-0">
+                  <h5 class="card-title m-0 text-2xl fw-bold"><i class="bi-app-indicator me-2"></i>Aplikasi Saya</h5>
+                </div>
+                <!-- Card header END -->
+                <!-- Card body START -->
+                <div class="card-body position-relative pt-0">
+                  <div class="d-flex flex-wrap justify-content-center align-items-center" id="cardAplikasi"></div>
+                </div>
+                <!-- Card body END -->
+              </div>
+            </div>
+            <!-- Card END -->
+
+            <!-- Card START -->
+            <div class="col-sm-6 col-lg-12">
+              <div class="card">
+                <!-- Card header START -->
+                <div class="card-header d-sm-flex justify-content-between align-items-center border-0">
+                  <h5 class="card-title m-0 text-2xl fw-bold"><i class="bi-music-player me-2"></i>Pemutar Musik</h5>
+                </div>
+                <!-- Card header END -->
+                <!-- Card body START -->
+                <div class="card-body">
+                  <div class="player w-100">
+                    <audio id="audio-player"></audio>
+                    <h2 id="music-name" class="text-center font-black text-lg text-blue-500"></h2>
+                    <p id="music-author" class="text-center"></p>
+                    <div class="player-progress">
+                      <div class="progress-values">
+                        <span id="player-current-time" class="text-xs text-gray-400">--:--</span>
+                        <span id="player-duration" class="text-xs text-gray-400">--:--</span>
+                      </div>
+                      <progress id="player-progress"></progress>
+                    </div>
+                    <div class="flex justify-evenly w-100 mt-2">
+                      <button id="btn-prev" class="flex justify-center align-items-center w-9 h-9 text-md text-gray-400 hover:text-gray-600 rounded-circle ring-1 ring-gray-200 hover:ring-gray-300 bg-gradient-to-t from-gray-300 to-gray-100 hover:bg-gradient-to-b hover:shadow-md duration-150"><i class="bi-rewind-fill"></i></button>
+                      <button id="btn-play" class="flex justify-center align-items-center w-9 h-9 text-md text-gray-400 hover:text-gray-600 rounded-circle ring-1 ring-gray-200 hover:ring-gray-300 bg-gradient-to-t from-gray-300 to-gray-100 hover:bg-gradient-to-b hover:shadow-md duration-150"><i id="btn-play-icon" class="bi bi-play-fill"></i></button>
+                      <button id="btn-next" class="flex justify-center align-items-center w-9 h-9 text-md text-gray-400 hover:text-gray-600 rounded-circle ring-1 ring-gray-200 hover:ring-gray-300 bg-gradient-to-t from-gray-300 to-gray-100 hover:bg-gradient-to-b hover:shadow-md duration-150"><i class="bi bi-fast-forward-fill"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <!-- Card body END -->
+              </div>
+            </div>
+            <!-- Card END -->
+
+            <!-- Card START -->
+            <div class="col-sm-6 col-lg-12">
+              <div class="card">
+                <!-- Card header START -->
+                <div class="card-header flex justify-between align-items-center border-0">
+                  <h5 class="card-title m-0 text-2xl font-bold"><i class="bi-calendar3 me-2"></i>Kalender</h5>
+                  <small class="tanggalHariIni text-gray-500"></small>
+                </div>
+                <!-- Card header END -->
+                <!-- Card body START -->
+                <div class="card-body position-relative pt-0">
+                  <div class="d-flex flex-wrap justify-content-center align-items-center" id="sectionCalendar">
+                    <div class="wrapper">
+                      <header class="flex justify-between items-center">
+                        <p class="current-date text-lg font-bold m-0 text-blue-500"></p>
+                        <div class="icons flex justify-center items-center gap-3">
+                          <span id="prev" class="flex justify-center items-center text-gray-300 hover:text-blue-600 cursor-pointer text-xl"><i class="bi bi-chevron-left"></i></span>
+                          <span id="next" class="flex justify-center items-center text-gray-300 hover:text-blue-600 cursor-pointer text-xl"><i class="bi bi-chevron-right"></i></span>
+                          <!-- <i class="bi-x-lg text-gray-200 hover:text-red-500 cursor-pointer" id="calendarSectionClose"></i> -->
+                        </div>
+                      </header>
+                      <div class="calendar flex flex-wrap list-style-none text-center">
+                        <ul class="weeks flex justify-between text-center w-100 font-medium">
+                          <li class="text-xs">Min</li>
+                          <li class="text-xs">Sen</li>
+                          <li class="text-xs">Sel</li>
+                          <li class="text-xs">Rab</li>
+                          <li class="text-xs">Kam</li>
+                          <li class="text-xs">Jum</li>
+                          <li class="text-xs">Sab</li>
+                        </ul>
+                        <ul class="days flex flex-wrap text-center"></ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Card body END -->
+              </div>
+            </div>
+            <!-- Card END -->
+
+        </div>
+
+      </div>
+      <!-- Right sidebar END -->
+
+    </div> <!-- Row END -->
+  </div>
+  <!-- Container END -->
+
+</main>
+<!-- **************** MAIN CONTENT END **************** -->
+
+<!-- *************** APK CONTENT START *************** -->
+
+<!-- BMI START -->
+<section class="fixed top-0 bottom-0 right-0 left-0 w-full h-screen bg-gradient-to-r from-sky-200/75 via-sky-100/75 to-sky-200/75 hidden justify-center items-center p-10" id="sectionBmi">
+  <form class="relative rounded-lg py-3 px-4 w-5/12 shadow-black/50 shadow-lg bg-white" id="formBmi" onsubmit="return validateform()">
+    <i class="absolute top-3 right-3 bi-x-lg text-gray-200 hover:text-sky-700 cursor-pointer" id="bmiSectionClose"></i>
+      <h1 class="text-sky-700 text-3xl font-bold text-center mb-6">Kalkulator BMI</h1>
+      <div class="flex justify-evenly items-center mb-4">
+          <div class="flex justify-center items-center gap-2">
+              <input type="text" name="inputUmurBmi" id="inputUmurBmi" class="rounded-full border border-gray-500 text-sm text-center w-14 h-7 focus:outline-none focus:border-2 focus:border-sky-500 font-medium text-sky-700">
+              <label for="inputUmurBmi" class="text-sky-700">Umur</label>
+          </div>
+          <div class="flex justify-center items-center gap-2">
+              <input type="radio" name="inputJKBmi" id="inputJKBmiL" class="rounded-full border border-sky-500 text-sm text-center w-7 h-7 focus:outline-none font-medium text-sky-700">
+              <label for="inputJKBmiL" class="text-sky-700">Laki-laki</label>
+          </div>
+          <div class="flex justify-center items-center gap-2">
+              <input type="radio" name="inputJKBmi" id="inputJKBmiP" class="rounded-full border border-sky-500 text-sm text-center w-7 h-7 focus:outline-none font-medium text-sky-700">
+              <label for="inputJKBmiP" class="text-sky-700">Perempuan</label>
+          </div>
+      </div>
+      <div class="flex justify-evenly items-center mb-6">
+          <div class="flex justify-center items-center gap-2">
+              <input type="text" name="inputTinggiBmi" id="inputTinggiBmi" class="rounded-full border border-gray-500 text-sm text-center w-14 h-7 focus:outline-none focus:border-2 focus:border-sky-500 font-medium text-sky-700">
+              <label for="inputTinggiBmi" class="text-sky-700">Tinggi (cm)</label>
+          </div>
+          <div class="flex justify-center items-center gap-2">
+              <input type="text" name="inputBeratBmi" id="inputBeratBmi" class="rounded-full border border-gray-500 text-sm text-center w-14 h-7 focus:outline-none focus:border-2 focus:border-sky-500 font-medium text-sky-700">
+              <label for="inputBeratBmi" class="text-sky-700">Berat (kg)</label>
+          </div>
+      </div>
+      <div class="flex justify-center items-center flex-col gap-2">
+          <button type="button" class="rounded-full mx-auto bg-gradient-to-t from-sky-800 to-sky-600 py-2 px-4 text-sky-300 hover:text-white hover:bg-gradient-to-b hover:shadow-black/25 hover:shadow-md" id="submitHitung">Hitung</button>
+          <small class="text-red-500 italic text-xs hidden" id="errorMessage"><i class="bi-exclamation-triangle-fill mr-1"></i>Masukkan semua informasi yang diminta!</small>
+          <div class="flex flex-col justify-center items-center">
+              <h5 class="text-sky-700 font-bold text-3xl hidden" id="resultBmi"></h5>
+              <p class="text-sky-700 text-lg font-medium hidden" id="numberBmi"></p>
+          </div>
+      </div>
+  </form>
+</section>
+<!-- BMI END -->
+
+<!-- CALCULATOR START -->
+<section class="fixed top-6 bottom-0 right-0 left-0 w-full h-screen bg-gradient-to-r from-sky-200/75 via-sky-100/75 to-sky-200/75 hidden justify-center items-center" id="sectionCalculator">
+  <!-- <i class="absolute top-3 right-3 bi-x-lg text-gray-200 hover:text-sky-700 cursor-pointer" id="calculatorSectionClose"></i> -->
+  <div class="rounded-xl p-4 w-3/12 shadow-black/50 shadow-lg bg-gradient-to-t from-sky-800 to-sky-600">
+      <div class="w-full rounded-lg h-20 bg-gradient-to-b from-sky-500 to-sky-300 ring-4 ring-sky-800 text-end text-4xl text-sky-900 font-mono flex justify-end items-end output break-all overflow-hidden">
+          <div class="prev-display"></div>
+          <div class="curr-display"></div>
+      </div>
+      <div class="w-full flex flex-col justify-center items-center gap-2 mt-4">
+          <div class="w-full flex justify-center items-center gap-2">
+              <button class="rounded-lg w-1/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-slate-400 to-slate-200 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-500 hover:text-gray-700" id="calculatorSectionClose"><i class="bi-x-lg"></i></button>
+              <button class="rounded-lg w-1/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-red-900 to-red-700 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-400 hover:text-white clear">CLR</button>
+              <button class="rounded-lg w-1/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-yellow-900 to-yellow-700 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-400 hover:text-white delete"><i class="bi-arrow-left"></i></button>
+              <button class="rounded-lg w-1/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-sky-800 to-sky-600 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-400 hover:text-white operation">/</button>
+          </div>
+          <div class="w-full flex justify-center items-center gap-2">
+              <button class="rounded-lg w-1/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-sky-800 to-sky-600 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-400 hover:text-white number">1</button>
+              <button class="rounded-lg w-1/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-sky-800 to-sky-600 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-400 hover:text-white number">2</button>
+              <button class="rounded-lg w-1/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-sky-800 to-sky-600 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-400 hover:text-white number">3</button>
+              <button class="rounded-lg w-1/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-sky-800 to-sky-600 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-400 hover:text-white operation">+</button>
+          </div>
+          <div class="w-full flex justify-center items-center gap-2">
+              <button class="rounded-lg w-1/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-sky-800 to-sky-600 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-400 hover:text-white number">4</button>
+              <button class="rounded-lg w-1/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-sky-800 to-sky-600 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-400 hover:text-white number">5</button>
+              <button class="rounded-lg w-1/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-sky-800 to-sky-600 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-400 hover:text-white number">6</button>
+              <button class="rounded-lg w-1/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-sky-800 to-sky-600 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-400 hover:text-white operation">-</button>
+          </div>
+          <div class="w-full flex justify-center items-center gap-2">
+              <button class="rounded-lg w-1/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-sky-800 to-sky-600 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-400 hover:text-white number">7</button>
+              <button class="rounded-lg w-1/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-sky-800 to-sky-600 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-400 hover:text-white number">8</button>
+              <button class="rounded-lg w-1/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-sky-800 to-sky-600 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-400 hover:text-white number">9</button>
+              <button class="rounded-lg w-1/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-sky-800 to-sky-600 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-400 hover:text-white operation">*</button>
+          </div>
+          <div class="w-full flex justify-center items-center gap-2">
+              <button class="rounded-lg w-1/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-sky-800 to-sky-600 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-400 hover:text-white number">.</button>
+              <button class="rounded-lg w-1/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-sky-800 to-sky-600 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-400 hover:text-white number">0</button>
+              <button class="rounded-lg w-2/4 h-12 bg-gradient-to-t hover:bg-gradient-to-b duration-150 from-sky-800 to-sky-600 shadow-black/50 shadow-md flex justify-center items-center text-2xl font-bold text-gray-400 hover:text-white equal">=</button>
+          </div>
+      </div>
+  </div>
+</section>
+<!-- CALCULATOR END -->
+
+<!-- CLOCK START -->
+<section class="fixed top-7 bottom-0 right-0 left-0 w-full h-screen bg-gradient-to-r from-sky-200/75 via-sky-100/75 to-sky-200/75 hidden justify-center items-center p-5" id="sectionClock">
+  <div class="container-clock shadow-black/50 shadow-lg bg-gradient-to-t from-sky-800 to-sky-600 p-10 rounded-full flex justify-center items-center gap-10">
+      <div class="clock">
+          <div class="circle circle1" id="sc" style="--clr:#ff2972"><i></i></div>
+          <div class="circle circle2" id="mn" style="--clr:#fee800"><i></i></div>
+          <div class="circle circle3" id="hr" style="--clr:#04fc43"><i></i></div>
+          
+          <span style="--i:1;"><b>1</b></span>
+          <span style="--i:2;"><b>2</b></span>
+          <span style="--i:3;"><b>3</b></span>
+          <span style="--i:4;"><b>4</b></span>
+          <span style="--i:5;"><b>5</b></span>
+          <span style="--i:6;"><b>6</b></span>
+          <span style="--i:7;"><b>7</b></span>
+          <span style="--i:8;"><b>8</b></span>
+          <span style="--i:9;"><b>9</b></span>
+          <span style="--i:10;"><b>10</b></span>
+          <span style="--i:11;"><b>11</b></span>
+          <span style="--i:12;"><b>12</b></span>
+      </div>
+      <div class="flex flex-col gap-10">
+          <div class="flex justify-between items-center">
+            <div id="time" class="flex gap-10 text-7xl">
+                <div id="hour" style="--clr:#04fc43">00</div>
+                <div id="minutes" style="--clr:#fee800">00</div>
+                <div id="seconds" style="--clr:#ff2972">00</div>
+                <div id="ampm"></div>
+              </div>
+              <span class="text-gray-200 hover:text-red-500 cursor-pointer" id="clockSectionClose">Tutup</span>
+          </div>
+          <div id="date" class="flex justify-start items-center gap-5 text-5xl">
+              <div id="day" class="text-white">Senin</div>
+              <div id="dd" style="--clr:#04fc43">01</div>
+              <div id="mm" style="--clr:#fee800">01</div>
+              <div id="yy" style="--clr:#ff2972">2023</div>
+          </div>
+      </div>
+  </div>
+</section>
+<!-- CLOCK END -->
+
+<!-- COUNTDOWN START -->
+<section class="fixed top-7 bottom-0 right-0 left-0 w-full h-screen bg-gradient-to-r from-sky-200/75 via-sky-100/75 to-sky-200/75 hidden justify-center items-center p-5" id="sectionCountdown">
+  <div class="relative container w-fit shadow-black/50 shadow-lg bg-gradient-to-t from-sky-800 to-sky-600 p-10 rounded-3xl flex flex-col justify-center items-center text-white">
+      <i class="absolute top-4 right-5 bi-x-lg text-gray-200 hover:text-sky-700 cursor-pointer" id="countdownSectionClose"></i>
+        <i class="bi bi-hourglass-split animate-spin text-6xl"></i>
+        <h2 class="coming-soon text-3xl text-white font-bold mb-5">Segera...</h2>
+        <p class="text text-xl">Menanti hari spesial, My 31th Birthday Party!!!</p>
+        <p class="text-upcoming mb-5"></p>
+        <div class="timer-container flex justify-between items-center w-full gap-5">
+            <div class="column shadow-gray-700/50 shadow-lg bg-gradient-to-t from-sky-800 to-sky-600 flex flex-col justify-center items-center p-4 rounded-full border border-white w-24 h-24">
+                <span id="days" class="text-timer text-3xl font-bold"></span>
+                <span class="text-gray-400">Hari</span>
+            </div>
+            <div class="column shadow-gray-700/50 shadow-lg bg-gradient-to-t from-sky-800 to-sky-600 flex flex-col justify-center items-center p-4 rounded-full border border-white w-24 h-24">
+                <span id="hours" class="text-timer text-3xl font-bold"></span>
+                <span class="text-gray-400">Jam</span>
+            </div>
+            <div class="column shadow-gray-700/50 shadow-lg bg-gradient-to-t from-sky-800 to-sky-600 flex flex-col justify-center items-center p-4 rounded-full border border-white w-24 h-24">
+                <span id="minutes" class="text-timer text-3xl font-bold"></span>
+                <span class="text-gray-400">Menit</span>
+            </div>
+            <div class="column shadow-gray-700/50 shadow-lg bg-gradient-to-t from-sky-800 to-sky-600 flex flex-col justify-center items-center p-4 rounded-full border border-white w-24 h-24">
+                <span id="seconds" class="text-timer text-3xl font-bold"></span>
+                <span class="text-gray-400">Detik</span>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- COUNTDOWN END -->
+
+<!-- DICTIONARY START -->
+<section class="fixed top-7 bottom-0 right-0 left-0 w-full h-screen bg-gradient-to-r from-sky-200/75 via-sky-100/75 to-sky-200/75 hidden justify-center items-center p-5" id="sectionDictionary">
+  <div class="relative container w-5/12 shadow-black/50 shadow-lg bg-gradient-to-t from-sky-800 to-sky-600 p-10 rounded-3xl flex flex-col justify-center items-center text-white">
+      <i class="absolute top-4 right-5 bi-x-lg text-gray-200 hover:text-sky-700 cursor-pointer" id="dictionarySectionClose"></i>
+        <h1 class="header text-3xl text-white font-bold">English Dictionary</h1>
+        <input type="text" class="input text-center mt-5 mb-1 rounded-full p-3 w-full focus:outline-none focus:ring-4 focus:ring-sky-500 focus:shadow-gray-700/50 focus:shadow-lg text-sky-700 font-bold" id="input" placeholder="Search a Word...">
+        <p class="info-text italic text-sm text-gray-400" id="info-text">Type a Word and Press Enter</p>
+        <div class="meaning-container text-center w-full hidden flex-col justify-center items-center" id="meaning-container">
+            <span class="title block text-xl mt-5 font-bold" id="title"></span>
+            <span class="meaning block mb-5" id="meaning"></span>
+            <audio src="" controls class="audio hidden" id="audio"></audio>
+        </div>
+    </div>
+</section>
+<!-- DICTIONARY END -->
+
+<!-- DRAWING START -->
+<section class="fixed top-7 bottom-0 right-0 left-0 w-full h-screen bg-gradient-to-r from-sky-200/75 via-sky-100/75 to-sky-200/75 hidden justify-center items-center" id="sectionDrawing">
+    <canvas id="canvas" class="w-full h-full bg-white"></canvas>
+    <div class="nav fixed rounded-l-3xl right-0 p-3 flex flex-col gap-3 bg-gray-200 ring-4 ring-gray-400">
+        <div class="clr w-7 h-7 ring-2 ring-white rounded-full hover:scale-125 duration-300" data-clr="#000000"></div>
+        <div class="clr w-7 h-7 ring-2 ring-white rounded-full hover:scale-125 duration-300" data-clr="#ef626c"></div>
+        <div class="clr w-7 h-7 ring-2 ring-white rounded-full hover:scale-125 duration-300" data-clr="#fdec03"></div>
+        <div class="clr w-7 h-7 ring-2 ring-white rounded-full hover:scale-125 duration-300" data-clr="#24d102"></div>
+        <div class="clr w-7 h-7 ring-2 ring-gray-400 rounded-full hover:scale-125 duration-300" data-clr="#ffffff"></div>
+        <hr class="border border-gray-400 my-1">
+        <button class="save w-7 h-7 ring-2 ring-white rounded-full hover:scale-125 duration-300 bg-sky-700 text-white"><i class="bi bi-download"></i></button>
+        <button class="clear w-7 h-7 ring-2 ring-white rounded-full hover:scale-125 duration-300 bg-red-500 text-white" id="drawingSectionClose"><i class="bi bi-x-lg"></i></button>
+    </div>
+</section>
+<!-- DRAWING END -->
+
+<!-- KEY CODE START -->
+<section class="fixed top-7 bottom-0 right-0 left-0 w-full h-screen bg-gradient-to-r from-sky-200/75 via-sky-100/75 to-sky-200/75 hidden justify-center items-center p-5" id="sectionKeyCode">
+  <div class="relative box w-4/12 shadow-black/50 shadow-lg bg-gradient-to-t from-sky-800 to-sky-600 p-10 rounded-3xl flex flex-col justify-center items-center text-white">
+      <i class="absolute top-4 right-5 bi-x-lg text-gray-200 hover:text-sky-700 cursor-pointer" id="keyCodeSectionClose"></i>
+        <p class="text text-LG mb-5">Press any key to see the key code</p>
+        <div class="content flex flex-col justify-center items-center gap-5">
+            <div class="key-code shadow-gray-700/50 shadow-lg bg-gradient-to-t from-sky-800 to-sky-600 flex flex-col justify-center items-center rounded-full border border-white w-24 h-24">Code <span class="text-2xl font-bold"></span></div>
+            <div class="key-name shadow-gray-700/50 shadow-lg bg-gradient-to-b from-sky-800 to-sky-600 flex flex-col justify-center items-center rounded-lg border border-white py-2 px-4">Key <span class="text-2xl font-bold"></span></div>
+        </div>
+    </div>
+</section>
+<!-- KEY CODE END -->
+
+<!-- TO DO LIST START -->
+<section class="fixed top-0 bottom-0 right-0 left-0 w-full h-screen bg-gradient-to-r from-sky-200/75 via-sky-100/75 to-sky-200/75 hidden justify-center items-center p-5" id="sectionToDoList">
+  <div class="relative container w-5/12 shadow-black/50 shadow-lg bg-gradient-to-t from-sky-800 to-sky-600 p-10 rounded-3xl flex flex-col justify-center items-center text-white">
+      <i class="absolute top-4 right-5 bi-x-lg text-gray-200 hover:text-sky-700 cursor-pointer" id="todolistSectionClose"></i>
+        <h4 class="text-lg font-bold text-white mb-3">Daftar Rencana</h4>
+        <div class="input-field w-full flex justify-center items-center gap-2 bg-white ring-4 ring-sky-500 rounded-full text-sky-700 overflow-hidden p-3">
+            <input id="inputTugas" class="w-full focus:outline-none focus:ring-0" placeholder="Masukkan Tugas" autocomplete="off">
+            <label for="inputTugas"><i class="bi bi-journal-bookmark note-icon"></i></label>   
+        </div>
+        <ul class="todoLists w-full flex flex-col justify-center items-center gap-3 my-3"></ul>
+        <div class="pending-tasks w-full text-xs flex justify-between items-center">
+            <span>Anda memiliki <span class="pending-num font-bold text-base">0</span> tugas yang tertunda</span>
+            <button class="clear-button p-2 hidden justify-between items-center bg-gradient-to-t hover:bg-gradient-to-b from-sky-800 to-sky-600 shadow-gray-700/50 shadow-lg rounded-full text-gray-400 hover:text-white"><i class="bi bi-trash3 mr-1"></i> Hapus Semua</button>
+        </div>
+    </div>
+</section>
+<!-- TO DO LIST END -->
+
+<!-- *************** APK CONTENT END *************** -->
+
+<!-- =======================
+JS libraries, plugins and custom scripts -->
+
+<!-- Bootstrap JS -->
+<script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Vendors -->
+<script src="assets/vendor/dropzone/dist/dropzone.js"></script>
+<script src="assets/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
+<script src="assets/vendor/glightbox-master/dist/js/glightbox.min.js"></script>
+
+<!-- Theme Functions -->
+<script src="assets/js/functions.js"></script>
+<script src="assets/js/script.js"></script>
+<script src="assets/js/musik.js"></script>
+<script src="assets/js/apk/bmi.js"></script>
+<script src="assets/js/apk/kalkulator.js"></script>
+<script src="assets/js/apk/kalender.js"></script>
+<script src="assets/js/apk/waktu.js"></script>
+<script src="assets/js/apk/waktumundur.js"></script>
+<script src="assets/js/apk/kamus.js"></script>
+<script src="assets/js/apk/kanvas.js"></script>
+<script src="assets/js/apk/kodekeyboard.js"></script>
+<script src="assets/js/apk/rencana.js"></script>
+
+</body>
+</html>
