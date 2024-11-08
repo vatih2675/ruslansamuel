@@ -1,6 +1,7 @@
 // My Profil
 const namaLengkap = "Ruslan Samuel";
 const namaAlias = "(Ibo)";
+const iconWeb = "icon.png";
 const fotoProfil = "ruslan.jpg";
 const tempatLahir = "Gorontalo";
 const tanggalLahir = "13 Desember 1993";
@@ -18,6 +19,7 @@ const tentangSaya =
   "Perkenalkan Saya Ruslan Dara Samuel, biasa dipanggil Ulan. Saya adalah lulusan SMA Jurusan IPA. Begitu lulus SMA Saya langsung memulai petualangan kerja untuk belajar dan menambah keahlian-keahlian baru diberbagai bidang, terutama admiistrasi. Selain bekerja, Saya terus mengikuti pelatihan-pelatihan baik yang diselenggarakan oleh pemerintah maupun swasta.";
 
 // Data Dinamis
+// let elIconWeb = document.querySelector("link[rel=icon]");
 let elFotoProfil = document.querySelectorAll('.fotoProfil');
 let elNamaLengkap = document.querySelectorAll('.namaLengkap');
 let elNamaAlias = document.querySelectorAll('.namaAlias');
@@ -35,6 +37,8 @@ let elAlamatEmail = document.querySelectorAll('.alamatEmail');
 let elWebsite = document.querySelectorAll('.website');
 let elTentangSaya = document.querySelectorAll('.tentangSaya');
 
+// console.log(elIconWeb);
+// elIconWeb.setAttribute("href", "assets/images/avatar/" + iconWeb);
 elFotoProfil.forEach((ftpf) => {
   ftpf.setAttribute("src", `assets/images/avatar/${fotoProfil}`);
 });
@@ -219,6 +223,13 @@ const pendidikanFormal = [
   },
 ];
 const pendidikanNonFormal = [
+  {
+    pendidikan: "Seleksi Kompetensi Dasar CPNS 2024",
+    lulus: "Oktober 2024",
+    pelaksana: "BKN RI",
+    foto: "bknri.jpg",
+    sertifikat: "Seleksi Kompetensi Dasar CPNS 2024.jpg",
+  },
   {
     pendidikan: "Seleksi Kompetensi Dasar CPNS 2021",
     lulus: "September 2021",
